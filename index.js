@@ -27,23 +27,23 @@ module.exports = function BossHelper(mod) {
 			switch (arg) {
 				case "警告":
 					mod.settings.alerted = !mod.settings.alerted
-					MSG.chat("警告消息 " + (mod.settings.alerted ? MSG.BLU("启用") : MSG.YEL("禁用")))
+					MSG.chat("Внимание " + (mod.settings.alerted ? MSG.BLU("Включить") : MSG.YEL("Отключить")))
 					break
 				case "通知":
 					mod.settings.notice = !mod.settings.notice
-					MSG.chat("通知消息 " + (mod.settings.notice ? MSG.BLU("启用") : MSG.YEL("禁用")))
+					MSG.chat("Уведомление " + (mod.settings.notice ? MSG.BLU("Включить") : MSG.YEL("Отключить")))
 					break
 				case "组队":
 					party = !party
-					MSG.chat("队内频道 " + (party ? MSG.BLU("启用") : MSG.YEL("禁用")))
+					MSG.chat("Канал группы " + (party ? MSG.BLU("Включить") : MSG.YEL("Отключить")))
 					break
 				case "消息":
 					mod.settings.messager = !mod.settings.messager
-					MSG.chat("消息记录 " + (mod.settings.messager ? MSG.BLU("启用") : MSG.YEL("禁用")))
+					MSG.chat("Журнал сообщений " + (mod.settings.messager ? MSG.BLU("Включить") : MSG.YEL("Отключить")))
 					break
 				case "标记":
 					mod.settings.marker = !mod.settings.marker
-					MSG.chat("标记位置 " + (mod.settings.marker ? MSG.BLU("启用") : MSG.YEL("禁用")))
+					MSG.chat("Отметить местоположение " + (mod.settings.marker ? MSG.BLU("Включить") : MSG.YEL("Отключить")))
 					break
 				case "清除":
 					MSG.chat("Boss-Helper " + TIP("清除怪物标记"))
@@ -52,39 +52,39 @@ module.exports = function BossHelper(mod) {
 					}
 					break
 				case "查询":
-					MSG.chat("------------ 世界BOSS ------------")
+					MSG.chat("------------ Мир BOSS ------------")
 					for (const i of mod.settings.bosses) {
 						if (i.logTime == undefined) continue
 						if (![5001, 501, 4001].includes(i.templateId)) continue
 						
 						var nextTime = i.logTime + 5*60*60*1000
 						if (i.logTime == 0) {
-							MSG.chat(MSG.RED(i.name) + MSG.YEL(" 暂无记录"))
+							MSG.chat(MSG.RED(i.name) + MSG.YEL(" Нет записи"))
 						} else if (Date.now() < nextTime) {
-							MSG.chat(MSG.RED(i.name) + " 下次刷新 " + MSG.TIP(getTime(nextTime)))
+							MSG.chat(MSG.RED(i.name) + " Следующее обновление " + MSG.TIP(getTime(nextTime)))
 						} else {
-							MSG.chat(MSG.RED(i.name) + " 上次记录 " + MSG.GRY(getTime(nextTime)))
+							MSG.chat(MSG.RED(i.name) + " Последняя запись " + MSG.GRY(getTime(nextTime)))
 						}
 					}
 					// break
 				// case "神秘":
-					MSG.chat("------------ 神秘商人 ------------")
+					MSG.chat("------------ Загадочный бизнесмен ------------")
 					for (const j of mod.settings.bosses) {
 						if (j.logTime == undefined) continue
 						if (![63, 72, 84, 183].includes(j.huntingZoneId)) continue
 						
 						var nextTime = j.logTime + 24*60*60*1000
 						if (j.logTime == 0) {
-							MSG.chat(MSG.PIK(j.name) + MSG.YEL(" 暂无记录"))
+							MSG.chat(MSG.PIK(j.name) + MSG.YEL(" Нет записи"))
 						} else if (Date.now() < nextTime) {
-							MSG.chat(MSG.PIK(j.name) + " 下次刷新 " + MSG.TIP(getTime(nextTime)))
+							MSG.chat(MSG.PIK(j.name) + " Следующее обновление " + MSG.TIP(getTime(nextTime)))
 						} else {
-							MSG.chat(MSG.PIK(j.name) + " 上次记录 " + MSG.GRY(getTime(nextTime)))
+							MSG.chat(MSG.PIK(j.name) + " Последняя запись " + MSG.GRY(getTime(nextTime)))
 						}
 					}
 					break
 				default:
-					MSG.chat("Boss-Helper " + MSG.RED("参数错误!"))
+					MSG.chat("Boss-Helper " + MSG.RED("Ошибка параметра!"))
 					break
 			}
 		}
@@ -108,15 +108,15 @@ module.exports = function BossHelper(mod) {
 				mobid.push(event.gameId)
 			}
 			if (mod.settings.alerted) {
-				MSG.alert(("发现 " + boss.name), 44)
+				MSG.alert(("открытие " + boss.name), 44)
 			}
 			if (party) {
 				mod.send('C_CHAT', 1, {
 					channel: 21,
-					message: (currentChannel + "线 - 发现 " + boss.name)
+					message: (currentChannel + "Линия - найдено " + boss.name)
 				})
 			} else if (mod.settings.notice) {
-				MSG.raids("发现 " + boss.name)
+				MSG.raids("открытие" + boss.name)
 			}
 		}
 		
@@ -183,13 +183,13 @@ module.exports = function BossHelper(mod) {
 		}
 		
 		if (boss && event.type == 0) {
-			MSG.chat(MSG.BLU("公会王 ") + MSG.RED(boss.name))
+			MSG.chat(MSG.BLU("Король гильдии ") + MSG.RED(boss.name))
 			notificationafk("公会王 " + boss.name)
 		}
 		
 		if (boss && event.type == 1) {
-			MSG.chat(MSG.BLU("已刷新 ") + MSG.TIP(boss.name))
-			notificationafk("已刷新 " + boss.name)
+			MSG.chat(MSG.BLU("Освеженный ") + MSG.TIP(boss.name))
+			notificationafk("Король гильдии " + boss.name)
 		}
 	})
 	
@@ -202,8 +202,8 @@ module.exports = function BossHelper(mod) {
 				getBossMsg(sysMsg.tokens.npcName)
 				whichBoss(bossHunting, bossTemplate)
 				if (boss) {
-					MSG.chat(MSG.BLU("已刷新 ") + MSG.RED(boss.name))
-					notificationafk("已刷新 " + boss.name)
+					MSG.chat(MSG.BLU("Освеженный ") + MSG.RED(boss.name))
+					notificationafk("Освеженный " + boss.name)
 				}
 				break
 			case 'SMT_FIELDBOSS_DIE_GUILD':
@@ -212,7 +212,7 @@ module.exports = function BossHelper(mod) {
 				whichBoss(bossHunting, bossTemplate)
 				if (boss) {
 					var nextTime = Date.now() + 5*60*60*1000
-					MSG.chat(MSG.RED(boss.name) + " 下次刷新 " + MSG.TIP(getTime(nextTime)))
+					MSG.chat(MSG.RED(boss.name) + " Следующее обновление " + MSG.TIP(getTime(nextTime)))
 					saveTime()
 				}
 				break
@@ -222,11 +222,11 @@ module.exports = function BossHelper(mod) {
 				whichBoss(bossHunting, bossTemplate)
 				if (boss) {
 					if ([1276, 1284].includes(bossTemplate)) {
-						MSG.party("已刷新 " + boss.name)
+						MSG.party("Освеженный " + boss.name)
 					} else {
-						MSG.chat(MSG.BLU("已刷新 ") + MSG.PIK(boss.name))
+						MSG.chat(MSG.BLU("Освеженный ") + MSG.PIK(boss.name))
 					}
-					notificationafk("已刷新 " + boss.name)
+					notificationafk("Освеженный " + boss.name)
 					saveTime()
 				}
 				break
@@ -320,7 +320,7 @@ module.exports = function BossHelper(mod) {
 		if (gage_info.curHp * 100n / gage_info.maxHp > boss_hp_stage) {
 			gage_info.curHp = gage_info.maxHp * boss_hp_stage / 100n
 			update_hp()
-			mod.command.message('修正BOSS血量为 <font color="#E69F00">' + String(boss_hp_stage) + '</font>%')
+			mod.command.message('Правильный БОСС ХП <font color="#E69F00">' + String(boss_hp_stage) + '</font>%')
 		}
 	}
 	
@@ -329,13 +329,13 @@ module.exports = function BossHelper(mod) {
 		gage_info.curHp = gage_info.maxHp
 		correct_hp(e.hpLevel)
 		if (e.mode) {
-			mod.command.message('你错过了 ~ <font color="#E69F00">' + Math.round((99999999 - e.remainingEnrageTime)/1000) + '</font> 秒的战斗')
+			mod.command.message('Ты пропустил ~ <font color="#E69F00">' + Math.round((99999999 - e.remainingEnrageTime)/1000) + '</font> 秒的战斗')
 		}
 		
 		if (e.hpLevel == 5) {
-			mod.command.message("BOSS血量为: 100%, 没人碰过它")
+			mod.command.message("Объем крови BOSS: 100%, никто не трогал его")
 		} else if (e.hpLevel == 0) {
-			mod.command.message('BOSS血量低于 <font color="#FF0000">20%</font> !!!')
+			mod.command.message('BOSS объем крови ниже, чем <font color="#FF0000">20%</font> !!!')
 		}
 		
 		if (!hooks.length) {
